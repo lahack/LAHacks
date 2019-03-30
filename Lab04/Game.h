@@ -24,7 +24,7 @@ public:
 	bool quit = false;
 	void AddActor(class Actor*);
 	void RemoveActor(class Actor*);
-	
+	void RemoveBlk(class Block*);
 
 	int previousTime;
 	vector<class Actor*> actors;
@@ -40,10 +40,11 @@ public:
 	vector<class Block*> blocks;
 	vector<class Goomba*> goombas;
 	class Player* player;
-
+	Block* refrigirator;
 	Vector2 cameraPos = Vector2(0, 0);
 	Mix_Chunk* GetSound(const std::string& filename);
 	int backgroundMusicChannel;
+	
 private:
 	void LoadData();
 	void UnloadData();

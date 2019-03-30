@@ -64,6 +64,7 @@ void PlayerMove::Update(float deltaTime) {
 		Mix_PlayChannel(-1, mOwner->GetGame()->GetSound("Assets/Sounds/StageClear.wav"), 0);
 		return;
 	}
+
 	float newX = initial.x + this->GetForwardSpeed()*deltaTime;
 	if(newX>=mOwner->GetGame()->cameraPos.x)
 		mOwner->SetPosition(Vector2(newX, initial.y+mYSpeed*deltaTime));
@@ -83,6 +84,16 @@ void PlayerMove::Update(float deltaTime) {
 	//check collision
 	CollisionComponent* playerCC = mOwner->GetComponent<CollisionComponent>();
 	bool notColliding = true;
+
+
+	//checking whether the player colldies with the refrigirator
+	CollisionComponent* ref_cc = mOwner->GetGame()->refrigirator->GetComponent<CollisionComponent>();
+	Vector2 offset = Vector2(0, 0);
+	if (playerCC->GetMinOverlap(ref_cc, offset) == CollSide::Top) {
+		mOwner->GetGame()->player->touched_ref = true;
+		mOwner->GetGame()->refrigirator->SetState(ActorState::Destroy);
+
+	}
 
 	for (int i = 0; i < mOwner->GetGame()->blocks.size(); i++) {
 		Vector2 offset = Vector2(0, 0);
@@ -154,12 +165,15 @@ void PlayerMove::Update(float deltaTime) {
 	//update the YSpeed for next frame
 	mYSpeed += 2000.0f*deltaTime;
 	
-	//update camera
-	float newCameraX= mOwner->GetPosition().x - 300;
-	if(newCameraX>=mOwner->GetGame()->cameraPos.x)
-		mOwner->GetGame()->cameraPos.x = newCameraX;
+	////update camera
+	//float newCameraX= mOwner->GetPosition().x - 300;
+	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
+	//	mOwner->GetGame()->cameraPos.x = newCameraX;
 	if(mOwner->GetGame()->cameraPos.x<0)
 		mOwner->GetGame()->cameraPos.x = 0;
+
+	if (mOwner->GetPosition().x >= 590.0f)
+		mOwner->SetPosition(Vector2(590.0f, mOwner->GetPosition().y));
 
 	if (depth == 0)
 		mOwner->GetGame()->cameraPos.y = 0;

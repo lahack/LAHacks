@@ -19,6 +19,7 @@
 #include "PlayerMove.h"
 #include "Spawner.h"
 #include "Goomba.h"
+#include "CollisionComponent.h"
 
 // TODO
 const int maxHeight = 448;
@@ -276,12 +277,21 @@ void Game::ReadFile(string filename,Game* g) {
 					player = new Player(g);
 					player->SetPosition(Vector2(centerX, centerY));
 				}
+				else if (current == "R") {
+					refrigirator = new Block(this);
+					refrigirator->ChangeTexture(GetTexture("Assets/ref.png"));
+					refrigirator->SetPosition(Vector2(centerX - 12, centerY));
+				}
 				centerX += BlockWidth;
 			}
 			centerX = 16;
 			centerY += BlockHeight;
 		}
 	}
+}
+
+void Game::RemoveBlk(Block* BLK) {
+
 }
 
 Mix_Chunk* Game::GetSound(const std::string& filename) {
