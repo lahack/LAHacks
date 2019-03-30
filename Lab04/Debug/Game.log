@@ -1,4 +1,9 @@
-﻿  Spawner.cpp
+﻿  PlayerMove.cpp
+e:\4thsemester\lahacks\lab04\playermove.cpp(77): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+e:\4thsemester\lahacks\lab04\playermove.cpp(98): warning C4018: “<”: 有符号/无符号不匹配
+e:\4thsemester\lahacks\lab04\playermove.cpp(112): warning C4018: “<”: 有符号/无符号不匹配
+e:\4thsemester\lahacks\lab04\playermove.cpp(132): warning C4018: “<”: 有符号/无符号不匹配
+e:\4thsemester\lahacks\lab04\playermove.cpp(191): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
   Game.vcxproj -> E:\4thSemester\LAHacks\Lab04\Debug\Game.exe
   E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libfreetype-6.dll
   E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libogg-0.dll

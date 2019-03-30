@@ -165,17 +165,16 @@ void PlayerMove::Update(float deltaTime) {
 	//update the YSpeed for next frame
 	mYSpeed += 2000.0f*deltaTime;
 	
-<<<<<<< HEAD
+
 	//update camera
 	float newCameraX= mOwner->GetPosition().x - 300;
 	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
-		mOwner->GetGame()->cameraPos.x = newCameraX;
+	mOwner->GetGame()->cameraPos.x = newCameraX;
 	if(mOwner->GetGame()->cameraPos.x<0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
 	if (level == 0)
 		mOwner->GetGame()->cameraPos.y = 1000;
-=======
 	////update camera
 	//float newCameraX= mOwner->GetPosition().x - 300;
 	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
@@ -186,9 +185,8 @@ void PlayerMove::Update(float deltaTime) {
 	if (mOwner->GetPosition().x >= 590.0f)
 		mOwner->SetPosition(Vector2(590.0f, mOwner->GetPosition().y));
 
-	if (depth == 0)
+	if (level == 0)
 		mOwner->GetGame()->cameraPos.y = 0;
->>>>>>> 3458d319ac9c17d4be6319364955b887152e2460
 	else
 		mOwner->GetGame()->cameraPos.y = 448*(level-1);
 

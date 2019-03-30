@@ -19,11 +19,8 @@
 #include "PlayerMove.h"
 #include "Spawner.h"
 #include "Goomba.h"
-<<<<<<< HEAD
 #include "Tip.h"
-=======
 #include "CollisionComponent.h"
->>>>>>> 3458d319ac9c17d4be6319364955b887152e2460
 
 // TODO
 const int maxHeight = 448;
