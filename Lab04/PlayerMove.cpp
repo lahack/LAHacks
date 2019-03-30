@@ -65,15 +65,15 @@ void PlayerMove::Update(float deltaTime) {
 		return;
 	}
 	float newX = initial.x + this->GetForwardSpeed()*deltaTime;
-	if(newX>=mOwner->GetGame()->cameraPos.x)
+	//if(newX>=mOwner->GetGame()->cameraPos.x)
 		mOwner->SetPosition(Vector2(newX, initial.y+mYSpeed*deltaTime));
-	else
-		mOwner->SetPosition(Vector2(initial.x, initial.y + mYSpeed * deltaTime));
+	//else
+		//mOwner->SetPosition(Vector2(initial.x, initial.y + mYSpeed * deltaTime));
 
 	Vector2 newPosition = mOwner->GetPosition();
 	bool outBound;
-	if (newPosition.y >= 448) {
-		mOwner->SetPosition(Vector2(newPosition.x, 500));
+	if (newPosition.y >= 448*level) {
+		mOwner->SetPosition(Vector2(newPosition.x, 500*level));
 		PlayerDead(dynamic_cast<Player*>(mOwner));
 		outBound = true;
 	}
@@ -156,15 +156,15 @@ void PlayerMove::Update(float deltaTime) {
 	
 	//update camera
 	float newCameraX= mOwner->GetPosition().x - 300;
-	if(newCameraX>=mOwner->GetGame()->cameraPos.x)
+	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
 		mOwner->GetGame()->cameraPos.x = newCameraX;
 	if(mOwner->GetGame()->cameraPos.x<0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
-	if (depth == 0)
-		mOwner->GetGame()->cameraPos.y = 0;
+	if (level == 0)
+		mOwner->GetGame()->cameraPos.y = 1000;
 	else
-		mOwner->GetGame()->cameraPos.y = 448;
+		mOwner->GetGame()->cameraPos.y = 448*(level-1);
 
 	//update animatedSprite
 	if(!(mOwner->GetState()==ActorState::Paused))

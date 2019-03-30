@@ -25,9 +25,18 @@ GoombaMove::~GoombaMove()
 void GoombaMove::Update(float deltaTime) {
 	Vector2 initial = mOwner->GetPosition();
 	float newX = initial.x + this->GetForwardSpeed()*deltaTime;
+	if (newX < 0) {
+		newX = 0;
+		this->SetForwardSpeed(-(this->GetForwardSpeed()));
+	}
+	if (newX > 600) {
+		newX = 600;
+		this->SetForwardSpeed(-(this->GetForwardSpeed()));
+	}
 	mOwner->SetPosition(Vector2(newX, initial.y + mYSpeed * deltaTime));
+	
 
-	if (mOwner->GetPosition().y >= 448) {
+	if (mOwner->GetPosition().y >= 448*level) {
 		mOwner->SetState(ActorState::Destroy);
 	}
 
