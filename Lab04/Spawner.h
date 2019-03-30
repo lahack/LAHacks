@@ -7,6 +7,5 @@ public:
 	Spawner(class Game* game);
 	~Spawner();
 	void OnUpdate(float deltaTime) override;
-	int level = 1;
 };
 

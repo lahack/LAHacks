@@ -14,7 +14,6 @@
     <ClInclude Include="Actor.h" />
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Block.h" />
-    <ClInclude Include="Collectible.h" />
     <ClInclude Include="CollisionComponent.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Game.h" />
@@ -25,15 +24,14 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMove.h" />
     <ClInclude Include="Random.h" />
+    <ClInclude Include="Ref.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="SpriteComponent.h" />
-    <ClInclude Include="Tip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Actor.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Block.cpp" />
-    <ClCompile Include="Collectible.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -45,9 +43,9 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMove.cpp" />
     <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Ref.cpp" />
     <ClCompile Include="Spawner.cpp" />
     <ClCompile Include="SpriteComponent.cpp" />
-    <ClCompile Include="Tip.cpp" />
   </ItemGroup>
   <PropertyGroup Condition="'$(WindowsTargetPlatformVersion)'==''">
     <!-- Latest Target Version property -->

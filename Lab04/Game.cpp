@@ -19,8 +19,7 @@
 #include "PlayerMove.h"
 #include "Spawner.h"
 #include "Goomba.h"
-#include "Tip.h"
-#include "CollisionComponent.h"
+#include "Ref.h"
 
 // TODO
 const int maxHeight = 448;
@@ -223,8 +222,6 @@ void Game::ReadFile(string filename,Game* g) {
 		string line;
 		int centerX = 16;
 		int centerY = 16;
-		int level = 1;
-		int rowCount = 1;
 		while (getline(myReadFile, line)) {
 			for (int i = 0; i < line.length(); i++) {
 				string current = line.substr(i,1);
@@ -272,35 +269,23 @@ void Game::ReadFile(string filename,Game* g) {
 					currentBlock->SetPosition(Vector2(centerX, centerY));
 					currentBlock->ChangeTexture(g->GetTexture("Assets/BlockI.png"));
 				}
-				else if (current == "T") {
-					Tip* currentTip = new Tip(g);
-					currentTip->SetPosition(Vector2(centerX, centerY));
-					//currentBlock->ChangeTexture(g->GetTexture("Assets/BlockI.png"));
-				}
 				else if (current == "Y") {
 					Spawner* currentSpawner = new Spawner(g);
 					currentSpawner->SetPosition(Vector2(centerX, centerY));
-					currentSpawner->level = level;
 				}
 				else if (current == "P") {
 					player = new Player(g);
 					player->SetPosition(Vector2(centerX, centerY));
-					player->GetComponent<PlayerMove>()->level = level;
 				}
 				else if (current == "R") {
-					refrigirator = new Block(this);
-					refrigirator->ChangeTexture(GetTexture("Assets/ref.png"));
+					refrigirator = new Ref(this);
+					
 					refrigirator->SetPosition(Vector2(centerX - 12, centerY));
 				}
 				centerX += BlockWidth;
 			}
 			centerX = 16;
 			centerY += BlockHeight;
-			rowCount++;
-			if (rowCount == 15) {
-				rowCount = 1;
-				level++;
-			}
 		}
 	}
 }

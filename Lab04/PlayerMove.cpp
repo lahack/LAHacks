@@ -13,7 +13,7 @@
 #include "AnimatedSprite.h"
 #include "SDL/SDL_mixer.h"
 #include <iostream>
-
+#include "Ref.h"
 
 PlayerMove::PlayerMove(Player* owner) :MoveComponent(owner)
 {
@@ -66,15 +66,15 @@ void PlayerMove::Update(float deltaTime) {
 	}
 
 	float newX = initial.x + this->GetForwardSpeed()*deltaTime;
-	//if(newX>=mOwner->GetGame()->cameraPos.x)
+	if(newX>=mOwner->GetGame()->cameraPos.x)
 		mOwner->SetPosition(Vector2(newX, initial.y+mYSpeed*deltaTime));
-	//else
-		//mOwner->SetPosition(Vector2(initial.x, initial.y + mYSpeed * deltaTime));
+	else
+		mOwner->SetPosition(Vector2(initial.x, initial.y + mYSpeed * deltaTime));
 
 	Vector2 newPosition = mOwner->GetPosition();
 	bool outBound;
-	if (newPosition.y >= 448*level) {
-		mOwner->SetPosition(Vector2(newPosition.x, 500*level));
+	if (newPosition.y >= 448) {
+		mOwner->SetPosition(Vector2(newPosition.x, 500));
 		PlayerDead(dynamic_cast<Player*>(mOwner));
 		outBound = true;
 	}
@@ -87,12 +87,12 @@ void PlayerMove::Update(float deltaTime) {
 
 
 	//checking whether the player colldies with the refrigirator
-	CollisionComponent* ref_cc = mOwner->GetGame()->refrigirator->GetComponent<CollisionComponent>();
+	CollisionComponent* ref_cc = mOwner->GetGame()->refrigirator->cc;
 	Vector2 offset = Vector2(0, 0);
 	if (playerCC->GetMinOverlap(ref_cc, offset) == CollSide::Top) {
 		mOwner->GetGame()->player->touched_ref = true;
 		mOwner->GetGame()->refrigirator->SetState(ActorState::Destroy);
-
+		mOwner->SetPosition(mOwner->GetPosition() + offset);
 	}
 
 	for (int i = 0; i < mOwner->GetGame()->blocks.size(); i++) {
@@ -165,12 +165,11 @@ void PlayerMove::Update(float deltaTime) {
 	//update the YSpeed for next frame
 	mYSpeed += 2000.0f*deltaTime;
 	
-
 	//update camera
-	float newCameraX= mOwner->GetPosition().x - 300;
+	float newCameraX = mOwner->GetPosition().x - 300;
 	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
 	mOwner->GetGame()->cameraPos.x = newCameraX;
-	if(mOwner->GetGame()->cameraPos.x<0)
+	if (mOwner->GetGame()->cameraPos.x < 0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
 	if (level == 0)
@@ -179,7 +178,7 @@ void PlayerMove::Update(float deltaTime) {
 	//float newCameraX= mOwner->GetPosition().x - 300;
 	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
 	//	mOwner->GetGame()->cameraPos.x = newCameraX;
-	if(mOwner->GetGame()->cameraPos.x<0)
+	if (mOwner->GetGame()->cameraPos.x < 0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
 	if (mOwner->GetPosition().x >= 590.0f)
@@ -188,7 +187,7 @@ void PlayerMove::Update(float deltaTime) {
 	if (level == 0)
 		mOwner->GetGame()->cameraPos.y = 0;
 	else
-		mOwner->GetGame()->cameraPos.y = 448*(level-1);
+		mOwner->GetGame()->cameraPos.y = 448 * (level - 1);
 
 	//update animatedSprite
 	if(!(mOwner->GetState()==ActorState::Paused))

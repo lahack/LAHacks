@@ -16,6 +16,7 @@ public:
 	void GoombaDead(class Goomba* currentGoomba);
 	void PlayerDead(Player* p);
 	void updateSprite();
+	int depth = 0;
 	int level = 0;
 };
 
