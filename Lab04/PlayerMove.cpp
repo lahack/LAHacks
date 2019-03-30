@@ -161,6 +161,11 @@ void PlayerMove::Update(float deltaTime) {
 	if(mOwner->GetGame()->cameraPos.x<0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
+	if (depth == 0)
+		mOwner->GetGame()->cameraPos.y = 0;
+	else
+		mOwner->GetGame()->cameraPos.y = 448;
+
 	//update animatedSprite
 	if(!(mOwner->GetState()==ActorState::Paused))
 		updateSprite();
