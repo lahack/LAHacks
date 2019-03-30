@@ -58,6 +58,12 @@
     <ClCompile Include="Ref.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Tip.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Collectible.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -96,6 +102,12 @@
     <ClInclude Include="GoombaMove.h" />
     <ClInclude Include="Spawner.h" />
     <ClInclude Include="Ref.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tip.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Collectible.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

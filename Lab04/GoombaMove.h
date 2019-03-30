@@ -10,5 +10,6 @@ public:
 	void Update(float deltaTime) override;
 	float mYSpeed = 0.0f;
 	bool mInAir = false;
+	int level = 1;
 };
 
