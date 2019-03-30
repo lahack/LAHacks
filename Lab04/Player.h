@@ -9,5 +9,6 @@ public:
 	class MoveComponent* mc;
 	class AnimatedSprite* asc;
 	class CollisionComponent* cc;
+	bool touched_ref = false;
 };
 
