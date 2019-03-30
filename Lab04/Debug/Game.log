@@ -1,20 +1,14 @@
-﻿  PlayerMove.cpp
-e:\4thsemester\lahacks\lab04\playermove.cpp(77): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
-e:\4thsemester\lahacks\lab04\playermove.cpp(98): warning C4018: “<”: 有符号/无符号不匹配
-e:\4thsemester\lahacks\lab04\playermove.cpp(112): warning C4018: “<”: 有符号/无符号不匹配
-e:\4thsemester\lahacks\lab04\playermove.cpp(132): warning C4018: “<”: 有符号/无符号不匹配
-e:\4thsemester\lahacks\lab04\playermove.cpp(191): warning C4244: “=”: 从“int”转换到“float”，可能丢失数据
-  Game.vcxproj -> E:\4thSemester\LAHacks\Lab04\Debug\Game.exe
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libfreetype-6.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libogg-0.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libpng16-16.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libvorbis-0.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libvorbisfile-3.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2_image.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2_mixer.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2_ttf.dll
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\zlib1.dll
+﻿  Game.vcxproj -> E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\Debug\Game.exe
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libfreetype-6.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libogg-0.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libpng16-16.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libvorbis-0.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\libvorbisfile-3.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2_image.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2_mixer.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\SDL2_ttf.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\SDL\lib\win\x86\zlib1.dll
   复制了 10 个文件
-  E:\4thSemester\LAHacks\Lab04\\..\Libraries\GLEW\lib\win\x86\glew32.dll
+  E:\CSCI_270_GIT_Repositories\LAHacks\Lab04\\..\Libraries\GLEW\lib\win\x86\glew32.dll
   复制了 1 个文件

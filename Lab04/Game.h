@@ -40,7 +40,7 @@ public:
 	vector<class Block*> blocks;
 	vector<class Goomba*> goombas;
 	class Player* player;
-	Block* refrigirator;
+	class Ref* refrigirator;
 	Vector2 cameraPos = Vector2(0, 0);
 	Mix_Chunk* GetSound(const std::string& filename);
 	int backgroundMusicChannel;
