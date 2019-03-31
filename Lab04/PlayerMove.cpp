@@ -91,7 +91,7 @@ void PlayerMove::Update(float deltaTime) {
 			go_to_level(tel[1]->level, 2320 / 32, 256 / 32);
 		}
 	}*/
-	cout << "time: " << time << endl;
+	//cout << "time: " << time << endl;
 	if (tel[1]->created) {
 		Vector2 offset = Vector2(0, 0);
 		if (playerCC->GetMinOverlap(tel[1]->GetComponent<CollisionComponent>(), offset) != CollSide::None && time <= 0.0f) {
@@ -108,7 +108,7 @@ void PlayerMove::Update(float deltaTime) {
 	Vector2 offset = Vector2(0, 0);
 	if (playerCC->GetMinOverlap(light_cc, offset) == CollSide::Top && mYSpeed > 0.0f && tel[1]->created == false) {
 		tel[1]->setup();
-		time = 1.0f;
+		time = 3.0f;
 		mYSpeed = 0.0f;
 		mInAir = false;
 		notColliding = false;
@@ -239,7 +239,7 @@ void PlayerMove::Update(float deltaTime) {
 
 
 void PlayerMove::go_to_level(int level, int row, int col) {
-	time = 2.0f;
+	time = 3.0f;
 	this->level = level;
 	//mOwner->GetGame()->cameraPos.y = 448 * (level - 1);
 	Vector2 pos = Vector2(col * 32 - 16,  row * 32 - 16);
