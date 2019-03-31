@@ -106,15 +106,23 @@ void PlayerMove::Update(float deltaTime) {
 	//checkign collision with the light
 	CollisionComponent* light_cc = mOwner->GetGame()->light->GetComponent<CollisionComponent>();
 	Vector2 offset = Vector2(0, 0);
-	if (playerCC->GetMinOverlap(light_cc, offset) == CollSide::Top && mYSpeed > 0.0f && tel[1]->created == false) {
-		tel[1]->setup();
-		time = 3.0f;
+	CollSide collside = playerCC->GetMinOverlap(light_cc, offset);
+	//if (collside != CollSide::None) {
+	//	mOwner->SetPosition(mOwner->GetPosition() + offset);
+	//}
+	if (collside == CollSide::Top && mYSpeed > 0.0f){
+		if (tel[1]->created == false) {
+			tel[1]->setup();
+			time = 3.0f;
+		}
+
 		mYSpeed = 0.0f;
 		mInAir = false;
 		notColliding = false;
 		mOwner->SetPosition(mOwner->GetPosition() + offset);
+		
 	}
-	else if (playerCC->GetMinOverlap(light_cc, offset) == CollSide::Left || playerCC->GetMinOverlap(light_cc, offset) == CollSide::Right) {
+	else if (collside == CollSide::Left || collside == CollSide::Right) {
 		mOwner->SetPosition(mOwner->GetPosition() + offset);
 	}
 
@@ -201,7 +209,9 @@ void PlayerMove::Update(float deltaTime) {
 		mInAir = true;
 	}
 
+
 	//update the YSpeed for next frame
+
 	mYSpeed += 2000.0f*deltaTime;
 
 

@@ -12,6 +12,7 @@ Tip::Tip(Game* game) :Actor(game)
 	cc->SetSize(20, 20);
 	collectible = new Collectible(this);
 	collectible->setOnCollect([this, game] {
+		this->SetState(ActorState::Destroy);
 		game->player->SetState(ActorState::Paused);
 		Mix_HaltChannel(game->backgroundMusicChannel);
 		Mix_PlayChannel(-1, game->GetSound("Assets/Sounds/PowerUp.wav"), 0);

@@ -184,7 +184,7 @@ void Game::LoadData() {
 	door_1->SetPosition(Vector2(280, 2320));*/
 	
 	light = new Actor(this);
-	light->SetPosition(Vector2(96, 2518));
+	light->SetPosition(Vector2(96, 2512));
 	CollisionComponent* cc2 = new CollisionComponent(light);
 	cc2->SetSize(58, 32);
 
