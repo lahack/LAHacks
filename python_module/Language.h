@@ -1,3 +1,6 @@
+#ifndef LANGUAGE_H
+#define LANGUAGE_H
+
 #include <string>
 #include <vector>
 
@@ -14,3 +17,5 @@ public:
 private:
     std::string credentialPath;
 };
+
+#endif
