@@ -21,7 +21,7 @@ void Collectible::Update(float deltaTime) {
 	CollisionComponent* collectibleCC= mOwner->GetComponent<CollisionComponent>();
 	//if collides
 	if (playerCC->GetMinOverlap(collectibleCC, Vector2(0, 0)) != CollSide::None) {
-		mOwner->SetState(ActorState::Destroy);
+		
 		if (mOnCollect) {
 			mOnCollect();
 		}

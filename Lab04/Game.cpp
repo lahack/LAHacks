@@ -176,18 +176,18 @@ void Game::LoadData() {
 
 	//hardcoding the invisible blocks in the home page
 
-	/*blue_pic = new Actor(this);
+	blue_pic = new Actor(this);
 	blue_pic->SetPosition(Vector2(256, 2320));
 	CollisionComponent* cc1 = new CollisionComponent(blue_pic);
 	cc1->SetSize(128, 32);
-	door_1 = new Teleport(this, 5, 128, 32);
-	door_1->SetPosition(Vector2(280, 2320));*/
+	door_1 = new Teleport(this, 5, 32, 32);
+	door_1->SetPosition(Vector2(280, 2320));
+
 	
 	light = new Actor(this);
 	light->SetPosition(Vector2(96, 2512));
 	CollisionComponent* cc2 = new CollisionComponent(light);
 	cc2->SetSize(58, 32);
-
 	door_2 = new Teleport(this, 1, 32, 32);
 	door_2->SetPosition(Vector2(76, 2488));
 

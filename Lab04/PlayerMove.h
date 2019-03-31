@@ -19,5 +19,7 @@ public:
 	int level = 6;
 	void go_to_level(int level, int row, int col);
 	float time = 0.0f;
+	void Show_Hide(class CollisionComponent* cc, class Teleport* tel, int row, int col);
+	bool notColliding = true;
 };
 

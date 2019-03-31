@@ -58,6 +58,33 @@ void PlayerMove::ProcessInput(const Uint8* keyState) {
 	}
 }
 
+void PlayerMove::Show_Hide(CollisionComponent* cc, Teleport* tel, int row, int col) {
+	if (tel->created && time <= 0.0f) {
+		Vector2 offset = Vector2(0, 0);
+		if (mOwner->GetGame()->player->GetComponent<CollisionComponent>()->GetMinOverlap(tel->GetComponent<CollisionComponent>(), offset) != CollSide::None) {
+			go_to_level(tel->level, row, col);
+		}
+	}
+	Vector2 offset = Vector2(0, 0);
+	CollSide collside = mOwner->GetGame()->player->GetComponent<CollisionComponent>()->GetMinOverlap(cc, offset);
+
+	if (collside == CollSide::Top && mYSpeed > 0.0f) {
+		if (tel->created == false) {
+			tel->setup();
+			time = 3.0f;
+		}
+		notColliding = false;
+		mYSpeed = 0.0f;
+		mInAir = false;
+		mOwner->SetPosition(mOwner->GetPosition() + offset);
+
+	}
+	else if (collside == CollSide::Left || collside == CollSide::Right) {
+		mOwner->SetPosition(mOwner->GetPosition() + offset);
+	}
+
+}
+
 void PlayerMove::Update(float deltaTime) {
 	//cout << "x: " << mOwner->GetPosition().x << "	y: " << mOwner->GetPosition().y << endl;
 	Vector2 initial = mOwner->GetPosition();
@@ -78,53 +105,21 @@ void PlayerMove::Update(float deltaTime) {
 	
 	//check collision
 	CollisionComponent* playerCC = mOwner->GetComponent<CollisionComponent>();
-	bool notColliding = true;
+	notColliding = true;
 
 
 	Teleport* tel[6];
 	tel[0] = mOwner->GetGame()->door_1;
 	tel[1] = mOwner->GetGame()->door_2;
 
-	/*if (tel[0]->created) {
-		Vector2 offset = Vector2(0, 0);
-		if (playerCC->GetMinOverlap(tel[0]->GetComponent<CollisionComponent>(), offset) != CollSide::None) {
-			go_to_level(tel[1]->level, 2320 / 32, 256 / 32);
-		}
-	}*/
-	//cout << "time: " << time << endl;
-	if (tel[1]->created) {
-		Vector2 offset = Vector2(0, 0);
-		if (playerCC->GetMinOverlap(tel[1]->GetComponent<CollisionComponent>(), offset) != CollSide::None && time <= 0.0f) {
-			go_to_level(tel[1]->level, 13, 2);
-		}
-	}
+
+	Show_Hide(mOwner->GetGame()->blue_pic->GetComponent<CollisionComponent>(), tel[0], 69, 2);
+	Show_Hide(mOwner->GetGame()->light->GetComponent<CollisionComponent>(), tel[1], 13, 2);
+	
+	
 
 
 
-
-
-	//checkign collision with the light
-	CollisionComponent* light_cc = mOwner->GetGame()->light->GetComponent<CollisionComponent>();
-	Vector2 offset = Vector2(0, 0);
-	CollSide collside = playerCC->GetMinOverlap(light_cc, offset);
-	//if (collside != CollSide::None) {
-	//	mOwner->SetPosition(mOwner->GetPosition() + offset);
-	//}
-	if (collside == CollSide::Top && mYSpeed > 0.0f){
-		if (tel[1]->created == false) {
-			tel[1]->setup();
-			time = 3.0f;
-		}
-
-		mYSpeed = 0.0f;
-		mInAir = false;
-		notColliding = false;
-		mOwner->SetPosition(mOwner->GetPosition() + offset);
-		
-	}
-	else if (collside == CollSide::Left || collside == CollSide::Right) {
-		mOwner->SetPosition(mOwner->GetPosition() + offset);
-	}
 
 
 	//checking whether the player colldies with the refrigirator
