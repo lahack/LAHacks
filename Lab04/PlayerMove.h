@@ -16,6 +16,8 @@ public:
 	void GoombaDead(class Goomba* currentGoomba);
 	void PlayerDead(Player* p);
 	void updateSprite();
-	int level = 0;
+	int level = 6;
+	void go_to_level(int level, int row, int col);
+	float time = 0.0f;
 };
 

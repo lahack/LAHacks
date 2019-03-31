@@ -14,6 +14,8 @@
 #include "SDL/SDL_mixer.h"
 #include <iostream>
 #include "Ref.h"
+#include "Door.h"
+#include "Teleport.h"
 
 PlayerMove::PlayerMove(Player* owner) :MoveComponent(owner)
 {
@@ -57,6 +59,7 @@ void PlayerMove::ProcessInput(const Uint8* keyState) {
 }
 
 void PlayerMove::Update(float deltaTime) {
+	//cout << "x: " << mOwner->GetPosition().x << "	y: " << mOwner->GetPosition().y << endl;
 	Vector2 initial = mOwner->GetPosition();
 	if (initial.x > 6368) {
 		mOwner->SetState(ActorState::Paused);
@@ -71,29 +74,65 @@ void PlayerMove::Update(float deltaTime) {
 	//else
 		//mOwner->SetPosition(Vector2(initial.x, initial.y + mYSpeed * deltaTime));
 
-	Vector2 newPosition = mOwner->GetPosition();
-	bool outBound;
-	if (newPosition.y >= 448 * level) {
-		mOwner->SetPosition(Vector2(newPosition.x, 500 * level));
-		PlayerDead(dynamic_cast<Player*>(mOwner));
-		outBound = true;
-	}
-	else {
-		outBound = false;
-	}
+
+	
 	//check collision
 	CollisionComponent* playerCC = mOwner->GetComponent<CollisionComponent>();
 	bool notColliding = true;
 
 
-	//checking whether the player colldies with the refrigirator
-	CollisionComponent* ref_cc = mOwner->GetGame()->refrigirator->GetComponent<CollisionComponent>();
-	Vector2 offset = Vector2(0, 0);
-	if (playerCC->GetMinOverlap(ref_cc, offset) == CollSide::Top) {
-		mOwner->GetGame()->player->touched_ref = true;
-		mOwner->GetGame()->refrigirator->SetState(ActorState::Destroy);
+	Teleport* tel[6];
+	tel[0] = mOwner->GetGame()->door_1;
+	tel[1] = mOwner->GetGame()->door_2;
 
+	/*if (tel[0]->created) {
+		Vector2 offset = Vector2(0, 0);
+		if (playerCC->GetMinOverlap(tel[0]->GetComponent<CollisionComponent>(), offset) != CollSide::None) {
+			go_to_level(tel[1]->level, 2320 / 32, 256 / 32);
+		}
+	}*/
+	cout << "time: " << time << endl;
+	if (tel[1]->created) {
+		Vector2 offset = Vector2(0, 0);
+		if (playerCC->GetMinOverlap(tel[1]->GetComponent<CollisionComponent>(), offset) != CollSide::None && time <= 0.0f) {
+			go_to_level(tel[1]->level, 13, 2);
+		}
 	}
+
+
+
+
+
+	//checkign collision with the light
+	CollisionComponent* light_cc = mOwner->GetGame()->light->GetComponent<CollisionComponent>();
+	Vector2 offset = Vector2(0, 0);
+	if (playerCC->GetMinOverlap(light_cc, offset) == CollSide::Top && mYSpeed > 0.0f && tel[1]->created == false) {
+		tel[1]->setup();
+		time = 1.0f;
+		mYSpeed = 0.0f;
+		mInAir = false;
+		notColliding = false;
+		mOwner->SetPosition(mOwner->GetPosition() + offset);
+	}
+	else if (playerCC->GetMinOverlap(light_cc, offset) == CollSide::Left || playerCC->GetMinOverlap(light_cc, offset) == CollSide::Right) {
+		mOwner->SetPosition(mOwner->GetPosition() + offset);
+	}
+
+
+	//checking whether the player colldies with the refrigirator
+	if (mOwner->GetGame()->refrigirator) {
+		CollisionComponent* ref_cc = mOwner->GetGame()->refrigirator->cc;
+		Vector2 offset = Vector2(0, 0);
+		if (playerCC->GetMinOverlap(ref_cc, offset) != CollSide::None) {
+			if (playerCC->GetMinOverlap(ref_cc, offset) == CollSide::Top) {
+				mOwner->GetGame()->player->touched_ref = true;
+				go_to_level(1, mOwner->GetGame()->refrigirator->row, mOwner->GetGame()->refrigirator->col);
+			}
+			mOwner->SetPosition(mOwner->GetPosition() + offset);
+		}
+			
+	}
+	
 
 	for (int i = 0; i < mOwner->GetGame()->blocks.size(); i++) {
 		Vector2 offset = Vector2(0, 0);
@@ -115,13 +154,13 @@ void PlayerMove::Update(float deltaTime) {
 		if (playerCC->GetMinOverlap(blockCC, offset) == CollSide::None) {
 			continue;
 		}
-		if (playerCC->GetMinOverlap(blockCC, offset) == CollSide::Top&&mYSpeed >= 0.0f) {
+		if (playerCC->GetMinOverlap(blockCC, offset) == CollSide::Top && mYSpeed >= 0.0f) {
 			//cout << "top" << endl;
 			mYSpeed = 0.0f;
 			mInAir = false;
 			notColliding = false;
 		}
-		else if (playerCC->GetMinOverlap(blockCC, offset) == CollSide::Bottom&&mYSpeed < 0.0f) {
+		else if (playerCC->GetMinOverlap(blockCC, offset) == CollSide::Bottom && mYSpeed < 0.0f) {
 			mYSpeed = 0.0f;
 			notColliding = false;
 			Mix_PlayChannel(-1, mOwner->GetGame()->GetSound("Assets/Sounds/Bump.wav"), 0);
@@ -158,7 +197,7 @@ void PlayerMove::Update(float deltaTime) {
 	}
 
 	//if is not colliding with any block and is not out of boundary
-	if (notColliding && (!outBound)) {
+	if (notColliding) {
 		mInAir = true;
 	}
 
@@ -167,14 +206,12 @@ void PlayerMove::Update(float deltaTime) {
 
 
 	//update camera
-	float newCameraX = mOwner->GetPosition().x - 300;
-	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
-	mOwner->GetGame()->cameraPos.x = newCameraX;
+	//float newCameraX = mOwner->GetPosition().x - 300;
+	////if(newCameraX>=mOwner->GetGame()->cameraPos.x)
+	//mOwner->GetGame()->cameraPos.x = newCameraX;
 	if (mOwner->GetGame()->cameraPos.x < 0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
-	if (level == 0)
-		mOwner->GetGame()->cameraPos.y = 1000;
 	////update camera
 	//float newCameraX= mOwner->GetPosition().x - 300;
 	//if(newCameraX>=mOwner->GetGame()->cameraPos.x)
@@ -182,18 +219,33 @@ void PlayerMove::Update(float deltaTime) {
 	if (mOwner->GetGame()->cameraPos.x < 0)
 		mOwner->GetGame()->cameraPos.x = 0;
 
+	if (mOwner->GetPosition().x < 5.0f)
+		mOwner->SetPosition(Vector2(5.0f, mOwner->GetPosition().y));
+
 	if (mOwner->GetPosition().x >= 590.0f)
 		mOwner->SetPosition(Vector2(590.0f, mOwner->GetPosition().y));
 
-	if (level == 0)
-		mOwner->GetGame()->cameraPos.y = 0;
-	else
-		mOwner->GetGame()->cameraPos.y = 448 * (level - 1);
+	
+	mOwner->GetGame()->cameraPos.y = 448 * (level - 1);
+
+	
 
 	//update animatedSprite
 	if (!(mOwner->GetState() == ActorState::Paused))
 		updateSprite();
+
+	time -= deltaTime;
 }
+
+
+void PlayerMove::go_to_level(int level, int row, int col) {
+	time = 2.0f;
+	this->level = level;
+	//mOwner->GetGame()->cameraPos.y = 448 * (level - 1);
+	Vector2 pos = Vector2(col * 32 - 16,  row * 32 - 16);
+	mOwner->SetPosition(pos);
+}
+
 
 void PlayerMove::GoombaDead(Goomba* currentGoomba) {
 	mYSpeed = -350.0f;

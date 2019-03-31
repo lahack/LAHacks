@@ -44,7 +44,15 @@ public:
 	Vector2 cameraPos = Vector2(0, 0);
 	Mix_Chunk* GetSound(const std::string& filename);
 	int backgroundMusicChannel;
-	
+
+	Actor* light;
+	Actor* bed;
+	Actor* blue_pic;
+	Actor* red_pic;
+	class Teleport* door_1;
+	class Teleport* door_2;
+
+
 private:
 	void LoadData();
 	void UnloadData();

@@ -21,7 +21,9 @@
 #include "Goomba.h"
 #include "Tip.h"
 #include "Ref.h"
-
+#include "CollisionComponent.h"
+#include "Door.h"
+#include "Teleport.h"
 // TODO
 const int maxHeight = 448;
 const int maxLength = 600;
@@ -160,10 +162,36 @@ void Game::LoadData() {
 	SpriteComponent* scBackground = new SpriteComponent(background, 60);
 	scBackground->SetTexture(GetTexture("Assets/Background.png"));
 
-
+	Actor* bedroom = new Actor(this);
+	bedroom->SetScale(1.15);
+	bedroom->SetPosition(Vector2(300, 2464));
+	SpriteComponent* bedroomBackground = new SpriteComponent(bedroom, 60);
+	bedroomBackground->SetTexture(GetTexture("Assets/bedroom.png"));
 
 	ReadFile("Assets/Level3.txt", this);
 	backgroundMusicChannel=Mix_PlayChannel(-1, GetSound("Assets/Sounds/Music.ogg"), -1);
+
+
+
+
+	//hardcoding the invisible blocks in the home page
+
+	/*blue_pic = new Actor(this);
+	blue_pic->SetPosition(Vector2(256, 2320));
+	CollisionComponent* cc1 = new CollisionComponent(blue_pic);
+	cc1->SetSize(128, 32);
+	door_1 = new Teleport(this, 5, 128, 32);
+	door_1->SetPosition(Vector2(280, 2320));*/
+	
+	light = new Actor(this);
+	light->SetPosition(Vector2(96, 2518));
+	CollisionComponent* cc2 = new CollisionComponent(light);
+	cc2->SetSize(58, 32);
+
+	door_2 = new Teleport(this, 1, 32, 32);
+	door_2->SetPosition(Vector2(76, 2488));
+
+
 }
 
 void Game::UnloadData() {
@@ -217,6 +245,7 @@ void Game::RemoveSprite(SpriteComponent* sc) {
 }
 
 void Game::ReadFile(string filename,Game* g) {
+
 	ifstream myReadFile;
 	myReadFile.open(filename);
 	if (myReadFile.is_open()) {
@@ -243,9 +272,8 @@ void Game::ReadFile(string filename,Game* g) {
 					currentBlock->ChangeTexture(g->GetTexture("Assets/BlockC.png"));
 				}
 				else if (current == "D") {
-					Block* currentBlock = new Block(g);
-					currentBlock->SetPosition(Vector2(centerX, centerY));
-					currentBlock->ChangeTexture(g->GetTexture("Assets/BlockD.png"));
+					Door* door = new Door(this);
+					door->SetPosition(Vector2(centerX, centerY));
 				}
 				else if (current == "E") {
 					Block* currentBlock = new Block(g);
@@ -288,7 +316,8 @@ void Game::ReadFile(string filename,Game* g) {
 					player->GetComponent<PlayerMove>()->level = level;
 				}
 				else if (current == "R") {
-					refrigirator = new Ref(this);
+					refrigirator = new Ref(g);
+					//std::cout << refrigirator->cc->GetWidth() << std::endl;
 					refrigirator->SetPosition(Vector2(centerX - 12, centerY));
 				}
 				centerX += BlockWidth;
