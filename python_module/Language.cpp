@@ -21,7 +21,7 @@ bool Language::checkEntities(string text, vector<string> entities) {
     pText = PyString_FromString(text.c_str());
 
     if (!pText) {
-        fprintf(stderr, "Cannot convert argument\n");
+        cout << "Cannot convert text." << endl;
         return false;
     }
 
@@ -43,34 +43,62 @@ bool Language::checkEntities(string text, vector<string> entities) {
 
             pValue = PyObject_CallObject(pFunc, pArgs);
             Py_DECREF(pArgs);
+            Py_DECREF(pText);
 
             // Compare
             if (pValue != NULL) {
                 vector<string> result;
                 PyObject *pItem;
+                
+                cerr << "result size: " << PyList_Size(pValue) << endl;  // DEBUG
 
-                for (int i = 0; i < PyTuple_Size(pValue); i++) {
-                    pItem = PyTuple_GetItem(pValue, i);
+                // Adds to result
+                for (int i = 0; i < PyList_Size(pValue); i++) {
+                    pItem = PyList_GetItem(pValue, i);
 
                     const char* tempCStr = PyString_AsString(pItem);
                     string tempStr = tempCStr;
                     result.push_back(tempStr);
                 }
 
-                Py_DECREF(pItem);
-
+                // Outputs API call result
                 cout << "Result of call:\n";
                 for (int i = 0; i < result.size(); i++) {
                     cout << result[i] << endl;
                 }
+
                 Py_DECREF(pValue);
+                Py_DECREF(pItem);
+                Py_DECREF(pFunc);
+                Py_DECREF(pModule);
 
+                for (int i = 0; i < entities.size(); i++) {
+                    vector<string>::iterator it;
+                    it = find (result.begin(), result.end(), entities[i]);
+
+                    if (it == result.end()) {
+                        return false;
+                    }
+                }
                 return true;
+            } else {
+                Py_DECREF(pFunc);
+                Py_DECREF(pModule);
 
-                //printf("Result of call: %ld\n", PyInt_AsLong(pValue));
+                cout << "Call failed." << endl;
             }
+        } else {
+            if (PyErr_Occurred())
+                PyErr_Print();
+            cout << "Cannot call function." << endl;
+            Py_DECREF(pModule);
         }
+    } else {
+        PyErr_Print();
+        cout << "Failed to load module." << endl;
     }
+
+    Py_Finalize();
 
     return false;
 }
