@@ -41,7 +41,43 @@ def checkEntities(keyPath, text):
 
 
 if __name__ == "__main__":
-    keyPath = "/Users/lihanzhu/Desktop/lahacks/Cloud/service-account.json"
-    text = "The fridge is on a key."
+    # keyPath = "/Users/lihanzhu/Desktop/lahacks/Cloud/service-account.json"
+    # text = "The fridge is on a key."
 
-    print(checkEntities(keyPath, text))
+    # print(checkEntities(keyPath, text))
+
+    KEY = "/Users/lihanzhu/Desktop/lahacks/Cloud/service-account.json"
+
+    while True:
+        fin = open("request.txt", "r")
+        line = fin.readline()
+
+        if len(line) != 0 and line != '':
+            line = line.strip()
+            wordList = line.split(",")
+            print(wordList, len(wordList))
+
+            line = fin.readline()
+            line = line.strip()
+            result = checkEntities(KEY, line)
+
+            fin.close()
+
+            # Empty the file
+            fout = open("request.txt", "w")
+            print("", file=fout, end="")
+            fout.close()
+
+            flag = True
+            for word in wordList:
+                if word not in result:
+                    flag = False
+
+            fout = open("response.txt", "w")
+            if flag:
+                print("1", file=fout, end="")
+            else:
+                print("0", file=fout, end="")
+            fout.close()
+        
+        fin.close()
